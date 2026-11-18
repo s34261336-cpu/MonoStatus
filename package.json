@@ -12,7 +12,6 @@
   "private": true,
   "dependencies": {
     "@replit/connectors-sdk": "^0.7.0",
-    "axios": "^1.21.1",
     "node-telegram-bot-api": "^2.4.0"
   },
   "devDependencies": {

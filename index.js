@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { Bot } = require("node-telegram-bot-api");
 
 const SITE_URL = "https://monogram.de1.netrun.io";
@@ -32,18 +31,21 @@ bot.catch((error) => {
 
 async function pingSite() {
   try {
-    const response = await axios.get(SITE_URL, {
-      timeout: REQUEST_TIMEOUT_MS,
-      validateStatus: () => true,
+    const response = await fetch(SITE_URL, {
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
 
     if (response.status !== 200) {
-      throw new Error(`Unexpected HTTP status: ${response.status}`);
+      throw new Error(`HTTP_${response.status}`);
     }
   } catch (error) {
-    const reason = axios.isAxiosError(error)
-      ? error.code || `HTTP_${error.response?.status || "ERROR"}`
-      : "SITE_CHECK_FAILED";
+    const reason =
+      error instanceof Error &&
+      (error.name === "TimeoutError" || error.message.startsWith("HTTP_"))
+        ? error.name === "TimeoutError"
+          ? "REQUEST_TIMEOUT"
+          : error.message
+        : "SITE_CHECK_FAILED";
 
     console.error("Site check failed:", reason);
 
