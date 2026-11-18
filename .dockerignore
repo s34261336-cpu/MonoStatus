@@ -1,4 +1,4 @@
 **
 !Dockerfile
-!bothost/
-!bothost/**
+!package.json
+!index.js
