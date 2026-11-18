@@ -2,9 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
-COPY bothost/package.json ./package.json
-RUN npm install --omit=dev
+COPY package.json ./package.json
+RUN npm install --omit=dev --ignore-scripts --package-lock=false
 
-COPY bothost/index.js ./index.js
+COPY index.js ./index.js
 
 CMD ["node", "index.js"]
