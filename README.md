@@ -20,9 +20,9 @@ Telegram-бот проверяет доступность сайта `https://mo
 npm start
 ```
 
-Для Bothost выберите Telegram / Node.js. Установка использует корневые
-`package.json` и `package-lock.json`; `Dockerfile` тоже настроен на эти файлы,
-если в BotHost включён **Use custom Dockerfile**.
+Для Bothost выберите Telegram / Node.js и включите **Use custom Dockerfile**.
+Dockerfile собирает приложение в `/app`, устанавливает корневые зависимости и
+запускает `index.js` в том же контейнере, чтобы runtime видел `node_modules`.
 
 Бот использует long polling. Перед запуском копии на Bothost остановите
 workflow `MonoStatus Bot` в Replit, чтобы два процесса не спорили за обновления
